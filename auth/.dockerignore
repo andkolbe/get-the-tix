@@ -1,0 +1,2 @@
+# the image that we build will install all of the relevant dependencies when it is built on its own
+node_modules

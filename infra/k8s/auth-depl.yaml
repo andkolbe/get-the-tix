@@ -1,0 +1,43 @@
+# This is the config file that creates a deployment that manages the posts pod (container)
+
+apiVersion: apps/v1 # k8s is extensible - we can add in our own custom objects. This specifies the set of objects we want K8s to look at
+kind: Deployment # the type of object we want to create
+metadata: # config options for the object we are about to create
+  name: auth-depl # when the deployment is created, give it a name of auth
+spec: # the exact attributes we want to apply to the object we are about to create
+  replicas: 1  # number of pods we want to create to run a particular image
+  selector: # tells the deployment which pods it needs to manage
+    matchLabels:
+      app: auth
+  template: # specifies the exact configuration of a pod that we want the deployment to create
+    metadata:
+      labels: # similar to className in html
+        app: auth
+    spec:
+      containers:  # we can create many containers in a single pod
+        - name: auth
+          image: akolbe/auth # the exact image we want to use
+          env: 
+        - name: MONGO_URI
+          value: 'mongodb://auth-mongo-srv:27017/auth'
+        - name: JWT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secret
+              key: JWT_KEY
+---
+# we usually end up with a one to one ratio of deployment and service so we can put them in the same file
+# Cluster IP Service allows pods that we have created to communicate with each other and receive requests from the client outside of our cluster
+# each pod has its own Cluster IP Service
+apiVersion: v1
+kind: Service # Cluster IP is the default service created by kubernetes. Don't need to specify it
+metadata:
+  name: auth-srv
+spec:
+  selector:
+    app: auth
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
