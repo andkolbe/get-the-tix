@@ -1,0 +1,59 @@
+# This config file is going to tell skaffold how to manage all of the different sub projects inside of our cluster
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl: # tells skaffold there is a collection of different config files intended for kubernetes inside of the specified directory
+    manifests: # any time we make a change to one of these files, skaffold will automatically reapply that file to our kubernetes cluster
+      - ./infra/k8s/* # skaffold will also create all of these files everytime we start skaffold up
+build:
+  local:
+    push: false # we don't need skaffold to push every change up to docker hub
+  artifacts:
+    - image: akolbe/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    # - image: akolbe/client
+    #   context: client
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: '**/*.js'
+    #         dest: .
+    # - image: akolbe/tickets
+    #   context: tickets
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: 'src/**/*.ts'
+    #         dest: .
+    # - image: akolbe/orders
+    #   context: orders
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: 'src/**/*.ts'
+    #         dest: .
+    # - image: akolbe/expiration
+    #   context: expiration
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: 'src/**/*.ts'
+    #         dest: .
+    # - image: akolbe/payments
+    #   context: payments
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: 'src/**/*.ts'
+    #         dest: .
