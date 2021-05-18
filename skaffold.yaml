@@ -17,14 +17,14 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    # - image: akolbe/client
-    #   context: client
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - src: '**/*.js'
-    #         dest: .
+    - image: akolbe/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
     # - image: akolbe/tickets
     #   context: tickets
     #   docker:
