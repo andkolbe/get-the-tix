@@ -1,3 +1,4 @@
+// decouple app and index so we can use our app in our supertests without worrying about connecting to a port
 import express from 'express';
 import 'express-async-errors'; // prevents you from having to write next() in all async function errors
 import cookieSession from 'cookie-session';
@@ -9,7 +10,7 @@ import { signUpRouter } from './routes/signup'
 import { errorHandler, NotFoundError } from '@ajktickets/common';
 
 const app = express();
-app.set('trust proxy', true) // tell express to trust our nginx proxy
+app.set('trust proxy', true) // tells express to trust all traffic going through our nginx proxy
 app.use(express.json());
 app.use(
   cookieSession({

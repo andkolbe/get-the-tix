@@ -18,13 +18,13 @@ spec: # the exact attributes we want to apply to the object we are about to crea
         - name: auth
           image: akolbe/auth # the exact image we want to use
           env: 
-        - name: MONGO_URI
-          value: 'mongodb://auth-mongo-srv:27017/auth'
-        - name: JWT_KEY
-          valueFrom:
-            secretKeyRef:
-              name: jwt-secret
-              key: JWT_KEY
+            - name: MONGO_URI
+              value: 'mongodb://auth-mongo-srv:27017/auth'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
 ---
 # we usually end up with a one to one ratio of deployment and service so we can put them in the same file
 # Cluster IP Service allows pods that we have created to communicate with each other and receive requests from the client outside of our cluster

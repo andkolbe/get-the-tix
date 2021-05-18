@@ -5,7 +5,7 @@ FROM node:alpine
 WORKDIR /app
 # copy over only the package.json file
 COPY package.json .
-# install all dependencies
+# --only=prod makes sure that docker doesn't build and use our dev dependencies
 RUN npm install --only=prod
 # copy over all of our remaining source code 
 COPY . .

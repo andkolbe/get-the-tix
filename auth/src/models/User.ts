@@ -31,7 +31,7 @@ const userSchema = new Schema({
         required: true
     }
 }, {
-    toJSON: { // modify the JSON response we get back 
+    toJSON: { // modify the JSON response we get back. remove password and _v 
         transform(doc, ret) {
             ret.id = ret._id
             delete ret._id

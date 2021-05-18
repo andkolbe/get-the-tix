@@ -33,8 +33,10 @@ router.post('/api/users/signup',
 
         // generate JWT
         const userJwt = jwt.sign({
+            // first argument is the payload, all of the info we want to store on the JWT
             id: user.id,
-            email: user.id
+            email: user.email
+            // second argument is the secret key
         }, process.env.JWT_KEY!) // the ! lets typescript know that this variable has already been defined
 
         // store JWT on session object
