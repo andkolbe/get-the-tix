@@ -35,6 +35,8 @@ router.put('/api/tickets/:id', requireAuth, [
         price: req.body.price
     })
     await ticket.save() // persists these values to mongo
+
+    // we want to publish an event after updating the ticket from the database
     new TicketUpdatedPublisher(natsWrapper.client).publish({
         id: ticket.id,
         title: ticket.title,

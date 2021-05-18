@@ -4,11 +4,16 @@ import  { connect, Stan } from 'node-nats-streaming'
 // create a nats client object that internally keeps track of a client that will be available to everything else inside of our app
 // make it work similar to mongoose
 class NatsWrapper {
-    private _client?: Stan // the ? tells typescript this property might be undefined for a period of time
+    // private means that nothing else inside of the app can access _client
+    // the ? tells typescript this property might be undefined for a period of time
+    // we want to expose it, but also display an error if it is undefined, if someone tries to access the client before we have called connect
+    // we can do this by using a typescript getter
+    private _client?: Stan 
 
     get client() {
+        // if we try to use the client before we have connected (it is undefined) throw an error
         if (!this._client) {
-            throw new Error('Cannot access NATS client without connecting')
+            throw new Error('Cannot access NATS client before connecting')
         }
 
         return this._client
