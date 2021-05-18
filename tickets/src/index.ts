@@ -28,11 +28,14 @@ const start = async () => {
   }
 
   try {
+    // code that initializes that NATS client and connectes to Nats Streaming Server
+    // once initialized, we can import our NATS client into any of our route handlers
     await natsWrapper.connect(
+      process.env.NATS_CLUSTER_ID,
       process.env.NATS_CLIENT_ID,
-      process.env.NATS_URL,
-      process.env.NATS_CLUSTER_ID
+      process.env.NATS_URL
     )
+    // if we lose our connection to nats, or if we shut down our app, we go through a graceful shutdown process
     natsWrapper.client.on('close', () => {
       console.log('NATS connection closed')
       process.exit()

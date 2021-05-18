@@ -1,8 +1,10 @@
 import  { connect, Stan } from 'node-nats-streaming'
 
 // all the code to connect to our nats server
+// create a nats client object that internally keeps track of a client that will be available to everything else inside of our app
+// make it work similar to mongoose
 class NatsWrapper {
-    private _client?: Stan
+    private _client?: Stan // the ? tells typescript this property might be undefined for a period of time
 
     get client() {
         if (!this._client) {
@@ -12,6 +14,7 @@ class NatsWrapper {
         return this._client
     }
 
+    // in connect, we create an instance of the nats client and assign it to the _client variable
     connect(clusterId: string, clientId: string, url: string) {
         this._client = connect(clusterId, clientId, { url })
 
