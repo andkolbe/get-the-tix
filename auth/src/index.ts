@@ -15,6 +15,7 @@ const start = async () => {
   }
 
   try {
+    // this instance of mongo will store all of the user data
     await mongoose.connect(process.env.MONGO_URI, { // connect to the mongodb pod
       useNewUrlParser: true,
       useUnifiedTopology: true,
