@@ -30,7 +30,7 @@ router.post('/api/orders', requireAuth, [
         throw new BadRequestError('Ticket is already reserved')
     }
 
-    // calculate an expiration date for this order
+    // calculate and start an expiration date for this order when it is created
     const expiration = new Date()
     expiration.setSeconds(expiration.getSeconds() + EXPIRATION_SECONDS)
 
