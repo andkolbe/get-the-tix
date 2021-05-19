@@ -8,9 +8,9 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
     queueGroupName = queueGroupName
 
     async onMessage(data: OrderCreatedEvent['data'], msg: Message) {
+        // when a new order is created, create a copy of that order in the payments service
         // extract info off data object, use it to build a new order, save that order, then ack the message
         // save the orders in the payments module in case the orders module goes down, the data is still saved inside of payments
-
         const order = Order.build({
             id: data.id,
             price: data.ticket.price,

@@ -5,8 +5,6 @@ import { Types } from 'mongoose'
 import { stripe } from '../../stripe'
 import { Payment } from '../../models/payment'
 
-jest.mock('../../stripe')
-
 it('returns a 404 when purchasing an order that does not exist', async () => {
     await request(app)
         .post('/api/payments')
@@ -40,7 +38,7 @@ it('returns a 401 when purchasing an order that does not belong to the user', as
     expect(401)
 })
 
-it('returns a 404 when purchasing a cancelled order', async () => {
+it('returns a 400 when purchasing a cancelled order', async () => {
     const userId = Types.ObjectId().toHexString()
     const order = Order.build({
         id: Types.ObjectId().toHexString(),
@@ -62,37 +60,41 @@ it('returns a 404 when purchasing a cancelled order', async () => {
     expect(400)
 })
 
-// it('returns a 204 with valid inputs', async () => {
-//     const userId = Types.ObjectId().toHexString()
-//     const order = Order.build({
-//         id: Types.ObjectId().toHexString(),
-//         userId,
-//         version: 0,
-//         price: 20,
-//         status: OrderStatus.Created
-//     })
-//     await order.save()
+it('returns a 201 with valid inputs', async () => {
+    const userId = Types.ObjectId().toHexString()
+    const price = Math.floor(Math.random() * 100000)
+    const order = Order.build({
+        id: Types.ObjectId().toHexString(),
+        userId,
+        version: 0,
+        price,
+        status: OrderStatus.Created
+    })
+    await order.save()
 
-//     await request(app)
-//         .post('/api/payments')
-//         .set('Cookie', global.signin(userId)) 
-//         .send({
-//             token: 'tok_visa',
-//             orderId: order.id
-//         })
-//         .expect(201)
+    await request(app)
+        .post('/api/payments')
+        .set('Cookie', global.signin(userId)) 
+        .send({
+            token: 'tok_visa',
+            orderId: order.id
+        })
+        .expect(201)
 
-//     const chargeOptions = (stripe.charges.create as jest.Mock).mock.calls[0][1]
-//     expect(chargeOptions.source).toEqual('tok_visa')
-//     expect(chargeOptions.amount).toEqual(20 * 100)
-//     expect(chargeOptions.currency).toEqual('usd')
+    const stripeCharges = await stripe.charges.list({ limit: 50 })
+    const stripeCharge = stripeCharges.data.find(charge => {
+        return charge.amount === price * 100
+    })
 
-//     const payment = await Payment.findOne({
-//         orderId: order.id,
-//         stripeId: chargeOptions.id
-//     })
-//     expect(payment).not.toBeNull()
-// })
+    // expect a charge with the appropriate amount assigned to it
+    expect(stripeCharge).toBeDefined()
+
+    const payment = await Payment.findOne({
+        orderId: order.id,
+        stripeId: stripeCharge!.id
+    })
+    expect(payment).not.toBeNull()
+})
 
 
 

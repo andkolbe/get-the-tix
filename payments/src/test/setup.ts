@@ -1,8 +1,7 @@
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import { connect, connection, Types } from 'mongoose'
-import request from 'supertest'
-import { app } from '../app'
 import jwt from 'jsonwebtoken'
+import config from '../config'
 
 declare global {
     namespace NodeJS {
@@ -13,9 +12,10 @@ declare global {
 }
 
 jest.mock('../nats-wrapper') // mock the nats-wrapper when executing our tests
-jest.mock('../stripe')
 
-let mongo: any;
+config.stripe
+
+let mongo: any
 
 beforeAll(async () => {
     // we need to set our JWT_KEY here because we decoupled app.ts and index.ts
