@@ -36,7 +36,7 @@ router.post('/api/users/signin',
         // generate JWT
         const userJwt = jwt.sign({
             id: existingUser.id,
-            email: existingUser.id
+            email: existingUser.email
         }, process.env.JWT_KEY!) // the ! lets typescript know that this variable has already been defined
 
         // store JWT on session object

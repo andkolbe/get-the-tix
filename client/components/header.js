@@ -22,7 +22,7 @@ const header = ({ currentUser }) => {
   return (
     <nav className="shadow-sm blue-100 navbar navbar-light bg-light mb-4">
       <Link href="/">
-        <a className="navbar-brand">Tickets App</a>
+        <a className="navbar-brand">Get the Tix</a>
       </Link>
 
       <div className="d-flex justify-content-end">

@@ -1,3 +1,5 @@
+#  A pod with a set of routing rules to distribute traffic to other services
+
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
 # metadata:

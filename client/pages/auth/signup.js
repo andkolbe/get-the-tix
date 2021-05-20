@@ -21,10 +21,6 @@ const signup = () => {
     await doRequest();
   };
 
-  const link = [
-    { label: 'Sign Up', href: '/auth/signup' }, 
-  ]
-
   return (
     <div className='row justify-content-center mt-5'>
       <div className='col-lg-6'>
@@ -47,7 +43,6 @@ const signup = () => {
               className='form-control border-primary'
             />
           </div>
-          {/* {errors} */}
           <button className='btn btn-primary'>Sign Up</button>
         </form>
       </div>
