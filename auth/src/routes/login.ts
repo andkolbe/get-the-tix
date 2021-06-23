@@ -7,11 +7,11 @@ import jwt from 'jsonwebtoken';
 
 const router = Router();
 
-router.post('/api/users/signin', 
+router.post('/api/users/login', 
     [
     body('email')
         .isEmail()
-        .withMessage('Email must be valid!'),
+        .withMessage('Email must be valid'),
     body('password')
         .trim()
         .notEmpty()

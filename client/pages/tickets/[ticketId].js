@@ -12,15 +12,22 @@ const TicketShow = ({ ticket }) => {
       Router.push('/orders/[orderId]', `/orders/${order.id}`),
   });
 
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    doRequest();
+  };
+
   return (
 
     <div className='row justify-content-center mt-5'>
       <div className='col-lg-5'>
-        <form className='form-group border rounded border-primary shadow p-4'>
+        <form className='form-group border rounded border-primary shadow p-4' onSubmit={onSubmit}>
           <h1>{ticket.title}</h1>
           <h4>Price: ${ticket.price}</h4>
           {errors}
           <button onClick={() => doRequest()} className='btn btn-primary mt-3'>
+          {/* <button onClick={doRequest} className='btn btn-primary mt-3'> */}
             Purchase
           </button>
         </form>
