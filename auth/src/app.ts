@@ -4,9 +4,9 @@ import 'express-async-errors'; // prevents you from having to write next() in al
 import cookieSession from 'cookie-session';
 
 import { currentUserRouter } from './routes/current-user'
-import { signInRouter } from './routes/signin'
-import { signOutRouter } from './routes/signout'
-import { signUpRouter } from './routes/signup'
+import { signInRouter } from './routes/login'
+import { signOutRouter } from './routes/logout'
+import { signUpRouter } from './routes/register'
 import { errorHandler, NotFoundError } from '@ajktickets/common';
 
 const app = express();

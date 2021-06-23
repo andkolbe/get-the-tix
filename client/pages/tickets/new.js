@@ -33,29 +33,31 @@ const NewTicket = () => {
   };
 
   return (
-    <div>
-      <h1>Create a Ticket</h1>
-      <form onSubmit={onSubmit}>
-        <div className="form-group">
-          <label>Title</label>
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <label>Price</label>
-          <input
-            value={price}
-            onBlur={onBlur}
-            onChange={(e) => setPrice(e.target.value)}
-            className="form-control"
-          />
-        </div>
-        {errors}
-        <button className="btn btn-primary">Submit</button>
-      </form>
+    <div className='row justify-content-center mt-5'>
+      <div className='col-lg-5'>
+        <form className="border rounded border-primary shadow p-4" onSubmit={onSubmit}>
+          <h1>Create a Ticket</h1>
+          <div className="form-group">
+            <label>Title</label>
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="form-control border-primary"
+            />
+          </div>
+          <div className="form-group">
+            <label>Price</label>
+            <input
+              value={price}
+              onBlur={onBlur}
+              onChange={(e) => setPrice(e.target.value)}
+              className="form-control border-primary"
+            />
+          </div>
+          {errors}
+          <button className="btn btn-primary">Submit</button>
+        </form>
+      </div>
     </div>
   );
 };

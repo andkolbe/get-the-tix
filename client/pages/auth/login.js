@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Router from 'next/router';
 import useRequest from '../../hooks/use-request';
 
@@ -6,7 +6,7 @@ const signin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { doRequest, errors } = useRequest({
-    url: '/api/users/signin',
+    url: '/api/users/login',
     method: 'post',
     body: {
       email,
@@ -22,11 +22,10 @@ const signin = () => {
   };
 
   return (
-
     <div className='row justify-content-center mt-5'>
       <div className='col-lg-6'>
         <form className='form-group border border-primary rounded shadow bg-white font-weight-bold p-4' onSubmit={onSubmit}>
-          <h1>Sign In</h1>
+          <h1>Log In</h1>
           <div className='form-group'>
             <label>Email Address</label>
             <input
@@ -45,7 +44,7 @@ const signin = () => {
             />
           </div>
           {errors}
-          <button className='btn btn-primary'>Sign In</button>
+          <button className='btn btn-primary'>Login</button>
         </form>
       </div>
     </div>

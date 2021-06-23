@@ -6,7 +6,7 @@ const signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { doRequest, errors } = useRequest({
-    url: '/api/users/signup',
+    url: '/api/users/register',
     method: 'post',
     body: {
       email,
@@ -25,7 +25,7 @@ const signup = () => {
     <div className='row justify-content-center mt-5'>
       <div className='col-lg-6'>
         <form className='form-group border rounded border-primary shadow bg-white font-weight-bold p-4' onSubmit={onSubmit}>
-          <h1>Sign Up</h1>
+          <h1>Register</h1>
           <div className='form-group'>
             <label>Email Address</label>
             <input
@@ -43,7 +43,8 @@ const signup = () => {
               className='form-control border-primary'
             />
           </div>
-          <button className='btn btn-primary'>Sign Up</button>
+          {errors}
+          <button className='btn btn-primary'>Register</button>
         </form>
       </div>
     </div>

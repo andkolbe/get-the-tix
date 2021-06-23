@@ -6,7 +6,7 @@ import { User } from '../models/User';
 
 const router = Router();
 
-router.post('/api/users/signup', 
+router.post('/api/users/register', 
     [
     body('email') // in the body of the incoming request, look for the email property
         .isEmail()

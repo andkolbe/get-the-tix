@@ -33,6 +33,7 @@ const OrderShow = ({ order, currentUser }) => {
   }
 
   return (
+    
     <div>
       Time left to pay: {timeLeft} seconds
       <StripeCheckout
@@ -43,6 +44,7 @@ const OrderShow = ({ order, currentUser }) => {
       />
       {errors}
     </div>
+
   );
 };
 
