@@ -3,20 +3,6 @@ import { connect, connection } from 'mongoose'
 import request from 'supertest'
 import { app } from '../app'
 
-/*
-What happens when we npm run test with Jest
-
-start in-memory copy of MongoDB
-because we are running the tests on our machine and not on Docker, we need a version of MongoDB where we can simulate storing data in our tests
-
-start up our express app
-
-use supertest library to make fake requests to our express app
-
-run assertions to make sure the request did the right thing
-
-*/
-
 declare global {
     namespace NodeJS {
         interface Global {
@@ -60,7 +46,7 @@ global.signin = async () => {
     const password = 'password'
 
     const response = await request(app)
-        .post('/api/users/signup')
+        .post('/api/users/register')
         .send({
             email, password
         })
