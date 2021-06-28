@@ -37,7 +37,7 @@ const LandingPage = ({ currentUser, tickets }) => {
 LandingPage.getInitialProps = async (context, client, currentUser) => {
   // const { data } = await client.get('/api/tickets');
   // return { tickets: data };
-
+  
   const promise = new Promise((resolve, reject) => {
     client.get('/api/tickets')
       .then(({data}) => {
