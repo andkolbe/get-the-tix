@@ -13,7 +13,8 @@ app.use(
     // Makes it easier to use different languages between our services. We don't have to worry about any language not understanding our encryption
     signed: false,
     // secure: true // requires that we must be on a https connection
-    secure: process.env.NODE_ENV !== 'test' // make this change to make sure auth works in our tests
+    // secure: process.env.NODE_ENV !== 'test' // make this change to make sure auth works in our tests
+    secure: false,
   })
 )
 app.use(currentUser) // run this after the req.session is set
