@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 const LandingPage = ({ currentUser, tickets }) => {
-  const ticketList = tickets.map((ticket) => {
+  const ticketList = tickets ? tickets.map(ticket => {
     return (
       <tr key={ticket.id}>
         <td>{ticket.title}</td>
@@ -13,7 +13,8 @@ const LandingPage = ({ currentUser, tickets }) => {
         </td>
       </tr>
     );
-  });
+  })
+  : null;
 
   return (
     <div className='row justify-content-center mt-4'>
@@ -37,7 +38,7 @@ const LandingPage = ({ currentUser, tickets }) => {
 LandingPage.getInitialProps = async (context, client, currentUser) => {
   // const { data } = await client.get('/api/tickets');
   // return { tickets: data };
-  
+
   const promise = new Promise((resolve, reject) => {
     client.get('/api/tickets')
       .then(({data}) => {
