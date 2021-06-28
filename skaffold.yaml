@@ -5,6 +5,7 @@ deploy:
   kubectl: # tells skaffold there is a collection of different config files intended for kubernetes inside of the specified directory
     manifests: # any time we make a change to one of these files, skaffold will automatically reapply that file to our kubernetes cluster
       - ./infra/k8s/* # skaffold will also create all of these files everytime we start skaffold up
+      - ./infra/k8s-dev/*
 build:
   local:
     push: false # we don't need skaffold to push every change up to docker hub
