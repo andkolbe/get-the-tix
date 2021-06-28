@@ -4,7 +4,7 @@ import { app } from './app'
  
 // run this function when we start up our app
 const start = async () => {
-  console.log('Starting up...')
+  console.log('Starting up.....')
 
   // if our env variables aren't defined, don't run this service
   if (!process.env.JWT_KEY) { // prevents typescript error with process.env on app startup
