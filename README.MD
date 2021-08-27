@@ -10,4 +10,4 @@ A ticket exchange and resell app that allows users to sign up, and sell and buy 
 - Deployed with Digital Ocean
 
 <!-- To visit the app in dev mode: https://ticketing.local -->
-<!-- To push to github: git push origin dev and then merge into main branch-->
+<!-- To push to github: git push origin dev and then merge into main branch -->
