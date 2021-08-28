@@ -1,4 +1,4 @@
-# This is the config file that creates a deployment that manages the auth pod (container)
+# This is the config file that creates a deployment that manages the auth pod (container)!
 
 apiVersion: apps/v1 # k8s is extensible - we can add in our own custom objects. This specifies the set of objects we want K8s to look at
 kind: Deployment # the type of object we want to create
