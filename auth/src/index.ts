@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 import { app } from './app'
  
-// run this function when we start up our app
+// run this function when we start up our app!
 const start = async () => {
   console.log('Starting up.....')
 
