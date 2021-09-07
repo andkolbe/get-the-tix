@@ -1,41 +1,40 @@
-import mongoose from 'mongoose'
+import { Document, model, Model, Schema } from 'mongoose'
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current'
-import { Order, OrderStatus } from '../../../orders/src/models/order'
- 
-// ### typescript defs
- 
-// describes the properties require for a new user
+
 interface TicketAttrs {
-    id: string
     title: string
     price: number
+    userId: string
 }
- 
-// properties of User Document
-interface TicketDoc extends mongoose.Document {
+
+interface TicketDoc extends Document {
     title: string
     price: number
+    userId: string
+    orderId?: string // optional. either string or undefined
     version: number
-    isReserved(): Promise<boolean>
 }
- 
-// user model properties (adds the custom static func)
-interface TicketModel extends mongoose.Model<TicketDoc> {
+
+interface TicketModel extends Model<TicketDoc> {
     build(attrs: TicketAttrs): TicketDoc
 }
- 
- 
-// ### Schema
-const ticketSchema = new mongoose.Schema({
+
+const ticketSchema = new Schema({
     title: {
         type: String,
         required: true
     },
     price: {
         type: Number,
-        required: true,
-        min: 0
+        required: true
     },
+    userId: {
+        type: String,
+        required: true
+    },
+    orderId: {
+        type: String
+    }
 }, {
     toJSON: {
         transform(doc, ret) {
@@ -44,35 +43,15 @@ const ticketSchema = new mongoose.Schema({
         }
     }
 })
- 
+// allows us to implement version control on all new and updated tickets sent out
+// increments document version numbers on each save, and prevents previous versions of a document from being saved over the current version
 ticketSchema.set('versionKey', 'version')
 ticketSchema.plugin(updateIfCurrentPlugin)
- 
-// workaround so that ts can check params
+
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
-    return new Ticket({
-        _id: attrs.id,
-        title: attrs.title,
-        price: attrs.price
-    })
+    return new Ticket(attrs)
 }
- 
-ticketSchema.methods.isReserved = async function() {
-    const existingOrder = await Order.findOne({
-        ticket: this.id,
-        status: {
-            $in: [
-                OrderStatus.Created,
-                OrderStatus.AwaitingPayment,
-                OrderStatus.Complete
-            ]
-        }
-    })
- 
-    return !!existingOrder
-}
- 
-const Ticket = mongoose.model<TicketDoc, TicketModel>('Ticket', ticketSchema)
- 
- 
-export { Ticket, TicketDoc }
+
+const Ticket = model<TicketDoc, TicketModel>('Ticket', ticketSchema)
+
+export { Ticket }
