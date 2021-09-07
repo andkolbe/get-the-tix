@@ -62,7 +62,7 @@ ticketSchema.statics.findByEvent = (event: { id: string, version: number }) => {
 ticketSchema.methods.isReserved = async function() {
     // this === the ticket document that we just called 'isReserved' on
     const existingOrder = await Order.findOne({
-        ticket: this,
+        ticket: this as any,
         status: {
             $in: [ // $in is a special mongodb operator. Our status must not be OrderStatus.Cancelled
                 OrderStatus.Created,
